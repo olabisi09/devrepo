@@ -1,32 +1,24 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../requests/supabase-client";
 
-export default function Login() {
-  const navigate = useNavigate();
+export default function Register() {
   const [user, setUser] = useState({ email: "", password: "" });
-
-  const signIn = async () => {
-    const { data, error } = await supabase.auth.signInWithPassword({
+  const signUp = async () => {
+    const { data, error } = await supabase.auth.signUp({
       email: user.email,
       password: user.password,
     });
-    if (data) {
-      navigate("/dashboard");
-    }
 
-    if (error) {
-      console.error(error.message);
-      return;
-    }
+    console.log(data, error);
   };
+
   return (
     <div className="flex flex-col min-h-screen items-center justify-center">
-      <h2>Sign into your account</h2>
+      <h2>Sign up for an account</h2>
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          signIn();
+          signUp();
         }}
         className="w-96 flex flex-col items-center"
       >
@@ -51,11 +43,8 @@ export default function Login() {
         </div>
         <br />
         <button type="submit" className="w-full">
-          Sign in
+          Sign up
         </button>
-        <Link className="ml-auto" to="/sign-up">
-          Don't have an account? Sign up here
-        </Link>
       </form>
     </div>
   );

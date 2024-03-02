@@ -1,8 +1,17 @@
+import { Route, Routes } from "react-router-dom";
+import Home from "./screens/home";
+import Login from "./screens/login";
+import Register from "./screens/register";
+import Dashboard from "./screens/dashboard";
+
 function App() {
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center">
-      <h1>DevRepo - The ultimate Dev Store</h1>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/sign-in" element={<Login />} />
+      <Route path="/sign-up" element={<Register />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+    </Routes>
   );
 }
 
