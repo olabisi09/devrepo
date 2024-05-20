@@ -3,6 +3,7 @@ import Home from "./screens/home";
 import Login from "./screens/login";
 import Register from "./screens/register";
 import Dashboard from "./screens/dashboard";
+import Layout from "./components/layout";
 
 function App() {
   return (
@@ -10,7 +11,9 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/sign-in" element={<Login />} />
       <Route path="/sign-up" element={<Register />} />
-      <Route path="/dashboard" element={<Dashboard />} />
+      <Route element={<Layout />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Route>
     </Routes>
   );
 }

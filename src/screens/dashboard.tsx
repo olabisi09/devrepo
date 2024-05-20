@@ -1,22 +1,60 @@
-import { useNavigate } from "react-router-dom";
-import { supabase } from "../requests/supabase-client";
+import { useQuery } from "@tanstack/react-query";
+import { addProject, getProjects } from "../requests";
+import Card from "../components/card";
+import { max } from "date-fns";
+import { GridViewIcon, ListViewIcon, PlusIcon } from "../utils/icons";
+import Button from "../components/button";
 
 export default function Dashboard() {
-  const navigate = useNavigate();
-  const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["get-projects"],
+    queryFn: getProjects,
+  });
 
-    if (error) console.log(error.message);
-    else navigate("/");
-  };
+  const projects = data as Project[];
+  const noOfProjects = projects?.length || 0;
+  const mostRecentProject = projects?.reduce((prev, project) => {
+    const maxDate = max([
+      new Date(prev.createdAt),
+      new Date(project.createdAt),
+    ]);
+    return maxDate === new Date(project.createdAt) ? project : prev;
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error: {error?.message}</div>;
+
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center text-center">
-      <h1>DevRepo - The ultimate Dev Store</h1>
-      <p>
-        Here's your dashboard. You can add, edit, and delete your links here.
-      </p>
-      <br />
-      <button onClick={signOut}>Sign out</button>
-    </div>
+    <>
+      <section className="flex flex-col lg:flex-row *:flex-1 *:grow items-center gap-4">
+        <Card>
+          <label>Number of projects</label>
+          <h3>{noOfProjects}</h3>
+        </Card>
+        <Card>
+          <label>Most recent</label>
+          <h3>{mostRecentProject?.projectName}</h3>
+        </Card>
+      </section>
+      <section className="mt-8">
+        <div className="flex justify-between items-center">
+          <h4>Recent projects</h4>
+          <div className="flex items-center gap-4">
+            <Button
+              icon={<PlusIcon />}
+              text="Add new project"
+              className="flex items-center gap-1"
+              onClick={() => addProject()}
+            />
+            <button>
+              <GridViewIcon width={20} height={20} />
+            </button>
+            <button>
+              <ListViewIcon width={20} height={20} />
+            </button>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

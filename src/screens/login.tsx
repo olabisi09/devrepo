@@ -7,17 +7,15 @@ export default function Login() {
   const [user, setUser] = useState({ email: "", password: "" });
 
   const signIn = async () => {
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email: user.email,
       password: user.password,
     });
-    if (data) {
-      navigate("/dashboard");
-    }
-
     if (error) {
       console.error(error.message);
       return;
+    } else {
+      navigate("/dashboard");
     }
   };
   return (

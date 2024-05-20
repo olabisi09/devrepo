@@ -15,6 +15,11 @@ code {
     monospace;
 }
 
+a, a:link, a:visited, a:hover, a::before, a:active, a::after {
+  text-decoration: none;
+  color: inherit;
+}
+
 h1 {
   font-size: clamp(2rem, 5vw, 3.5rem);
 }
@@ -25,24 +30,24 @@ h3 {
   font-size: clamp(0.75rem, 5vw, 3rem);
 }
 h4 {
-  font-size: clamp(0.5rem, 5vw, 3rem);
+  font-size: clamp(0.5rem, 5vw, 2.5rem);
 }
 
-button {
-  font-weight: 500;
-  padding-inline: 1.5rem;
-  padding-block: 0.75rem;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.5s ease;
-  background-color: #32127A !important;
-  color: #ffffff;
+// button {
+//   font-weight: 500;
+//   padding-inline: 1.5rem;
+//   padding-block: 0.75rem;
+//   border-radius: 0.5rem;
+//   font-size: 1rem;
+//   cursor: pointer;
+//   transition: all 0.5s ease;
+//   background-color: #32127A !important;
+//   color: #ffffff;
 
-  &:hover {
-    opacity: 0.8;
-  }
-}
+//   &:hover {
+//     opacity: 0.8;
+//   }
+// }
 
 p {
   font-size: 1.25rem;
